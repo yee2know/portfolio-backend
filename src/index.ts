@@ -32,7 +32,8 @@ app.get("/", (req, res) => {
   res.send("Blog backend is running!");
 });
 
-const port = process.env.PORT || 4000;
-app.listen(port, () => {
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 4000;
+
+app.listen(port, "0.0.0.0", () => {
   console.log(`Blog backend running on port ${port}`);
 });
