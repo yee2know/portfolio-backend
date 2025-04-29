@@ -15,7 +15,18 @@ dotenv.config();
 const app = express();
 const prisma = new PrismaClient();
 
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://portfolio-yee2know.vercel.app",
+  // Add your deployed frontend URL here, e.g. 'https://your-frontend-domain.com'
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true, // If you need to send cookies or authentication headers
+  })
+);
 app.use(express.json());
 app.use("/uploads", express.static("uploads")); // 이미지 서빙
 
@@ -36,4 +47,5 @@ const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 4000;
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Blog backend running on port ${port}`);
+  console.log("CORS allowed origins:", allowedOrigins);
 });
